@@ -1,10 +1,10 @@
 const express = require('express');
-
 const app = express();
+const checklistRounter = require('./src/rounter/checklist')
 
-app.get('/' , (req , res) => {
-  res.send('<h1>Minha lista de tarefas<h1/>')
-})
+// a middleware
+app.use(express.json())
+app.use('/checklists' , checklistRounter)
 
 app.listen(9000, () => {
   console.log('Servidor iniciado')
