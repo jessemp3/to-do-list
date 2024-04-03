@@ -5,10 +5,10 @@ const Checklist = require("../model/checklist");
 
 rounter.get("/", async (req, res) => {
   try {
-    let checklist = await Checklist.find({});
-    res.status(200).json(checklist);
+    let checklists = await Checklist.find({});
+    res.status(200).render('checklists/index',  { checklist: checklists})
   } catch (error) {
-    res.status(500).json(error);
+    res.status(404).render('pages/error' , {error: 'Erro ao exibir as listas'})
   }
 });
 
@@ -25,10 +25,10 @@ rounter.post("/", async (req, res) => {
 
 rounter.get("/:id", async (req, res) => {
   try {
-    let checklist = await Checklist.findById(req.params.id);
-    res.status(200).json(checklist);
+    let checklists = await Checklist.findById(req.params.id);
+    res.status(200).render('checklists/show',  { checklist: checklists})
   } catch (error) {
-    res.status(422).json(error);
+    res.status(404).render('pages/error' , {error: 'Erro ao exibir as listas de tarefas'})
   }
 });
 
