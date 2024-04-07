@@ -21,12 +21,12 @@ rounter.get('/new' , async (req , res) => {
   }
 })
 
-rounter.get('/:id/edit' , async (req, res) => {
+rounter.get('/:id/edit', async(req, res) =>{
   try {
-    let checklist = await Checklist.findById(req.params.id)
-    res.status(200).render('checklists/edit' , {checklist : checklist})
+    let checklist = await Checklist.findById(req.params.id);
+    res.status(200).render('checklists/edit', { checklist: checklist })
   } catch (error) {
-    res.status(500).render('pages/error' , {error: 'Erro ao exibir a edição de lista de tarefas!'})
+    res.status(500).render('pages/error', {error: 'Erro ao exibir a edição Listas de tarefas'});
   }
 })
 
@@ -51,18 +51,19 @@ rounter.get("/:id", async (req, res) => {
   }
 });
 
-rounter.put("/:id", async (req, res) => {
-  let { name } = req.body.checklist
+rounter.put('/:id', async (req, res) => {
+  let { name } = req.body.checklist;
   let checklist = await Checklist.findById(req.params.id)
 
-    try {
-      await Checklist.update({name})
-      res.redirect('checklists')
-    } catch (error) {
-      let errors = error.errors
-      res.status(422).render('checklists/edit', {checklist: {...checklist, errors}})
-    }
-});
+  try {
+    await checklist.updateOne({name})
+    res.redirect('/checklists');
+  } catch (error) {
+    let errors = error.errors;
+    res.status(422).render('checklists/edit', {checklist: {...checklist, errors}});
+  }
+})
+
 
 rounter.delete("/:id", async (req, res) => {
     try {
