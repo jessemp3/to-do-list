@@ -2,6 +2,8 @@ const express = require('express');
 const path = require('path')
 
 const checklistRounter = require('./src/rounter/checklist')
+const taskRouter = require('./src/rounter/task')
+
 const rootRounter = require('./src/rounter/index')
 const methodOverride = require('method-override')
 
@@ -21,6 +23,8 @@ app.set('view engine' , 'ejs')
 // a middleware
 app.use('/' , rootRounter)
 app.use('/checklists' , checklistRounter)
+app.use('/checklists' , taskRouter.checklistDependent)
+
 
 app.listen(9000, () => {
   console.log('Servidor iniciado')

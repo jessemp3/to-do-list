@@ -38,16 +38,16 @@ rounter.post("/", async (req, res) => {
     await checklist.save();
     res.redirect('/checklists')
   } catch (error) {
-    res.status(422).render('checklists/new' , {checklist: {...checklist , error}})
+    res.status(422).render('checklists/new' , {checklist: {...checklist , errors}})
   }
 });
 
 rounter.get("/:id", async (req, res) => {
   try {
-    let checklists = await Checklist.findById(req.params.id);
+    let checklists = await Checklist.findById(req.params.id).populate('tasks');
     res.status(200).render('checklists/show',  { checklist: checklists})
   } catch (error) {
-    res.status(404).render('pages/error' , {error: 'Erro ao exibir as listas de tarefas'})
+    res.status(404).render('pages/error' , {errors: 'Erro ao exibir as listas de tarefas'})
   }
 });
 
@@ -68,9 +68,9 @@ rounter.put('/:id', async (req, res) => {
 rounter.delete("/:id", async (req, res) => {
     try {
       let checklist = await Checklist.findByIdAndDelete(req.params.id)
-      res.status(200).json(checklist)
+      res.redirect('/checklists')
     } catch (error) {
-      res.status(422).json(error)
+      res.status(500).render('pages/error' , {error: 'Erro ao deletar a listas de tarefas'})
     }
 });
 
