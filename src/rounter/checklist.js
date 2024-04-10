@@ -44,8 +44,8 @@ rounter.post("/", async (req, res) => {
 
 rounter.get("/:id", async (req, res) => {
   try {
-    let checklists = await Checklist.findById(req.params.id).populate('tasks');
-    res.status(200).render('checklists/show',  { checklist: checklists})
+    let checklist = await Checklist.findById(req.params.id).populate('tasks');
+    res.status(200).render('checklists/show',  { checklist: checklist})
   } catch (error) {
     res.status(404).render('pages/error' , {errors: 'Erro ao exibir as listas de tarefas'})
   }

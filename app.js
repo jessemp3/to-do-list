@@ -25,7 +25,6 @@ app.use('/' , rootRounter)
 app.use('/checklists' , checklistRounter)
 app.use('/checklists' , taskRouter.checklistDependent)
 
-
 app.listen(9000, () => {
   console.log('Servidor iniciado')
 })
